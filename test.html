@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tests du jeu 2048 avec QUnit</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.16.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.16.0.js"></script>
+    <script src="2048.js"></script>
+    <script>
+        QUnit.test("Test de l'affichage initial de la grille", function(assert) {
+            setGame();
+            const tiles = document.querySelectorAll('.tile');
+            assert.strictEqual(tiles.length, 16, "Le nombre de tuiles devrait être de 16 au démarrage.");
+        });
+
+        QUnit.test("Test de la fusion des tuiles", function(assert) {
+            const testBoard = [
+                [2, 2, 0, 0],
+                [0, 2, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
+            board = testBoard;
+            slideLeft();
+            assert.strictEqual(board[0][0], 4, "La fusion des tuiles à gauche a échoué.");
+            assert.strictEqual(board[1][0], 2, "La fusion des tuiles à gauche a échoué.");
+        });
+
+        QUnit.test("Test de la génération de nouvelles tuiles", function(assert) {
+            setGame();
+            setTwo();
+            const tiles = document.querySelectorAll('.tile');
+            let newTileGenerated = false;
+            tiles.forEach(tile => {
+                if (tile.innerText === "2") {
+                    newTileGenerated = true;
+                }
+            });
+            assert.strictEqual(newTileGenerated, true, "La nouvelle tuile générée devrait avoir une valeur de 2.");
+        });
+    </script>
+</body>
+</html>
